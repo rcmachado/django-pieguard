@@ -9,9 +9,9 @@ Requirements
 ------------
 
 * Python 2.7+
-* Django 1.7
-* django-guardian 1.2.4
-* tastypie 0.12.1
+* Django_ 1.7
+* django-guardian_ 1.2.4
+* tastypie_ 0.12.1
 
 Not tested in other versions yet.
 
@@ -58,6 +58,6 @@ TODO
 * Docs
 * Python 3 official support
 
-_Django: http://www.djangoproject.com
-_tastypie: https://github.com/toastdriven/django-tastypie
-_django-guardian: https://github.com/lukaszb/django-guardian
+.. _Django: http://www.djangoproject.com
+.. _tastypie: https://github.com/toastdriven/django-tastypie
+.. _django-guardian: https://github.com/lukaszb/django-guardian
