@@ -5,6 +5,8 @@ django-pieguard
 django-pieguard is a simple authorization class for tastypie that uses
 django-guardian to handle object permissions.
 
+This was inspired by gist https://gist.github.com/7wonders/6557760.
+
 Requirements
 ------------
 
@@ -57,6 +59,11 @@ TODO
 * Tests
 * Docs
 * Python 3 official support
+
+License
+-------
+
+This work is licensed under MIT license.
 
 .. _Django: http://www.djangoproject.com
 .. _tastypie: https://github.com/toastdriven/django-tastypie
