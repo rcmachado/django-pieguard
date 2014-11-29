@@ -22,33 +22,34 @@ class GuardianAuthorization(DjangoAuthorization):
         class_ = self.base_checks(bundle.request, object_list.model)
         permission = '{}_{}'.format(permission_type, class_._meta.model_name)
 
+        objects = []
         checker = ObjectPermissionChecker(bundle.request.user)
         for obj in object_list:
-            if not checker.has_perm(permission, obj):
-                return False
+            if checker.has_perm(permission, obj):
+                objects.append(obj)
 
-        return True
+        return objects
 
     def read_list(self, object_list, bundle):
         return self.has_permission(object_list, bundle, 'view')
 
     def create_list(self, object_list, bundle):
-        return self.has_permission(object_list, bundle, 'add')
+        return bool(self.has_permission(object_list, bundle, 'add'))
 
     def update_list(self, object_list, bundle):
-        return self.has_permission(object_list, bundle, 'change')
+        return bool(self.has_permission(object_list, bundle, 'change'))
 
     def delete_list(self, object_list, bundle):
-        return self.has_permission(object_list, bundle, 'delete')
+        return bool(self.has_permission(object_list, bundle, 'delete'))
 
     def read_detail(self, object_list, bundle):
         return self.has_permission(object_list, bundle, 'view')
 
     def create_detail(self, object_list, bundle):
-        return self.has_permission(object_list, bundle, 'add')
+        return bool(self.has_permission(object_list, bundle, 'add'))
 
     def update_detail(self, object_list, bundle):
-        return self.has_permission(object_list, bundle, 'change')
+        return bool(self.has_permission(object_list, bundle, 'change'))
 
     def delete_detail(self, object_list, bundle):
-        return self.has_permission(object_list, bundle, 'delete')
+        return bool(self.has_permission(object_list, bundle, 'delete'))
