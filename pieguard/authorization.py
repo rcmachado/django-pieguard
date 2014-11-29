@@ -19,7 +19,9 @@ class GuardianAuthorization(DjangoAuthorization):
         return class_
 
     def has_permission(self, object_list, bundle, permission_type):
-        class_ = self.base_checks(bundle.request, object_list.model)
+        model = getattr(object_list, 'model', bundle.obj._meta.model)
+
+        class_ = self.base_checks(bundle.request, model)
         permission = '{}_{}'.format(permission_type, class_._meta.model_name)
 
         objects = []
@@ -34,22 +36,22 @@ class GuardianAuthorization(DjangoAuthorization):
         return self.has_permission(object_list, bundle, 'view')
 
     def create_list(self, object_list, bundle):
-        return bool(self.has_permission(object_list, bundle, 'add'))
+        return self.has_permission(object_list, bundle, 'add')
 
     def update_list(self, object_list, bundle):
-        return bool(self.has_permission(object_list, bundle, 'change'))
+        return self.has_permission(object_list, bundle, 'change')
 
     def delete_list(self, object_list, bundle):
-        return bool(self.has_permission(object_list, bundle, 'delete'))
+        return self.has_permission(object_list, bundle, 'delete')
 
     def read_detail(self, object_list, bundle):
-        return self.has_permission(object_list, bundle, 'view')
+        return bool(self.has_permission([bundle.obj], bundle, 'view'))
 
     def create_detail(self, object_list, bundle):
-        return bool(self.has_permission(object_list, bundle, 'add'))
+        return bool(self.has_permission([bundle.obj], bundle, 'add'))
 
     def update_detail(self, object_list, bundle):
-        return bool(self.has_permission(object_list, bundle, 'change'))
+        return bool(self.has_permission([bundle.obj], bundle, 'change'))
 
     def delete_detail(self, object_list, bundle):
-        return bool(self.has_permission(object_list, bundle, 'delete'))
+        return bool(self.has_permission([bundle.obj], bundle, 'delete'))
