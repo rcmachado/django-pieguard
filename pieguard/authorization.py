@@ -12,10 +12,6 @@ class GuardianAuthorization(DjangoAuthorization):
         if not class_:
             raise Unauthorized('You are not allowed to access this resource.')
 
-        # User must be authenticated
-        if not request.user.is_authenticated():
-            return Unauthorized('You are not allowed to access this resource.')
-
         return class_
 
     def has_permission(self, object_list, bundle, permission_type):
