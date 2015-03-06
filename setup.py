@@ -3,8 +3,24 @@
 
 import os
 import sys
-
+import re
 import pieguard
+
+
+def parse_requirements(file_name):
+    requirements = []
+    for line in open(file_name, 'r').read().split('\n'):
+        if re.match(r'(\s*#)|(\s*$)', line):
+            continue
+        if re.match(r'\s*-e\s+', line):
+            # TODO support version numbers
+            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$', r'\1', line))
+        elif re.match(r'\s*-f\s+', line):
+            pass
+        else:
+            requirements.append(line)
+
+    return requirements
 
 try:
     from setuptools import setup
@@ -36,8 +52,8 @@ setup(
         'pieguard',
     ],
     include_package_data=True,
-    install_requires=[
-    ],
+    install_requires=parse_requirements('requirements.txt'),
+    tests_require=parse_requirements('requirements-test.txt'),
     license="MIT",
     zip_safe=False,
     keywords='django-pieguard',
@@ -50,4 +66,5 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
     ],
+    test_suite='tests.runtests.runtests',
 )
